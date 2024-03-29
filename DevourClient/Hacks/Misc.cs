@@ -134,7 +134,7 @@ namespace DevourClient.Hacks
                 GameObject _azazel;
 
                 _azazel = BoltNetwork.Instantiate(_azazelPrefabId, new Vector3(pos.x, pos.y, pos.z + 1f), Quaternion.identity);
-                Il2Cpp.SurvivalAzazelBehaviour azazelBehaviour = _azazel?.GetComponent<Il2Cpp.SurvivalAzazelBehaviour>();
+                Il2Cpp.SurvivalAzazelBehaviour? azazelBehaviour = _azazel?.GetComponent<Il2Cpp.SurvivalAzazelBehaviour>();
 
                 if (_azazel != null)
 				{
@@ -208,9 +208,9 @@ namespace DevourClient.Hacks
 
 			BoltLauncher.StartServer(__config, null);
 			
-			Il2CppHorror.Menu.ShowCanvasGroup(_menu.loadingCanvasGroup, true);
-            Il2CppHorror.Menu.ShowCanvasGroup(_menu.hostCanvasGroup, false);
-            Il2CppHorror.Menu.ShowCanvasGroup(_menu.mainMenuCanvasGroup, false);
+			_menu.ShowCanvasGroup(_menu.loadingCanvasGroup, true);
+            _menu.ShowCanvasGroup(_menu.hostCanvasGroup, false);
+            _menu.ShowCanvasGroup(_menu.mainMenuCanvasGroup, false);
         }
 		
 		public static void SetSteamName(string name)

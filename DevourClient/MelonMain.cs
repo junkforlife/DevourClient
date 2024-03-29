@@ -18,8 +18,8 @@ namespace DevourClient
 {
     public class Load : MelonLoader.MelonMod
     {
-        public static ClientMain ClientMainInstance { get; private set; }
-        public static GameObject DevourClientGO { get; private set; }
+        public static ClientMain ClientMainInstance { get; private set; } = default!;
+        public static GameObject DevourClientGO { get; private set; } = default!;
         public static void Init()
         {
             ClassInjector.RegisterTypeInIl2Cpp<ClientMain>();
