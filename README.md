@@ -51,7 +51,7 @@ Everything about spoofing ehre (steam name, server name, level...) will persist 
 
 ## English Installation Tutorial
 
-Raz did a great job at writing a guide on how to install the mod, linkie here : [link](https://docs.google.com/presentation/d/1YdIE5wwGWiJZ2RVughFYrlXUnFrxol-HI7QyLY_m0zc/edit#slide=id.p)<br>
+Raz did a great job at writing a guide on how to install the mod, link here : [link](https://docs.google.com/presentation/d/1YdIE5wwGWiJZ2RVughFYrlXUnFrxol-HI7QyLY_m0zc/edit#slide=id.p)<br>
 
 ## French Installation Tutorial
 
