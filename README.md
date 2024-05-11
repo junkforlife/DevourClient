@@ -49,11 +49,19 @@ Everything about spoofing ehre (steam name, server name, level...) will persist 
 * Fullbright
 * Create a lobby with no player limit
 
-## Installation
-For my French fellas out there, 1tap2times made a French video tutorial for the installation of the Mod : [link](https://vimeo.com/789315436)<br>
-For my German friends, KiwiJuice02 made a german video tutorial right here : [link](https://www.youtube.com/watch?v=Ntablvo6y-I)<br>
-In order to get all of this working you need to generate the DevourClient.dll file by building the source code.
+## English Installation Tutorial
 
+Raz did a great job at writing a guide on how to install the mod, link here : [link](https://docs.google.com/presentation/d/1YdIE5wwGWiJZ2RVughFYrlXUnFrxol-HI7QyLY_m0zc/edit#slide=id.p)<br>
+
+## French Installation Tutorial
+
+For my French fellas out there, 1tap2times made a French video tutorial for the installation of the Mod : [link](https://vimeo.com/789315436)<br>
+
+## German Video Installation Tutorial
+
+For my German friends, KiwiJuice02 made a german video tutorial right here : [link](https://www.youtube.com/watch?v=Ntablvo6y-I)<br>
+
+In order to get all of this working you need to generate the DevourClient.dll file by building the source code.
 0. Install [.NET 6 SDK and runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0).
 1. [Build the cheat from source](https://github.com/ALittlePatate/DevourClient#building-from-source).
 2. Put the DevourClient.dll file located in `DevourClient\bin\Release\net6.0` inside `C:\Program Files (x86)\Steam\steamapps\common\Devour\Mods` folder.
