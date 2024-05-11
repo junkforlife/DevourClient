@@ -49,16 +49,18 @@ Everything about spoofing ehre (steam name, server name, level...) will persist 
 * Fullbright
 * Create a lobby with no player limit
 
-## Installation Tutorials
-
 ## English Installation Tutorial
+
 Raz did a great job at writing a guide on how to install the mod, linkie here : [link](https://docs.google.com/presentation/d/1YdIE5wwGWiJZ2RVughFYrlXUnFrxol-HI7QyLY_m0zc/edit#slide=id.p)<br>
 
 ## French Installation Tutorial
+
 For my French fellas out there, 1tap2times made a French video tutorial for the installation of the Mod : [link](https://vimeo.com/789315436)<br>
 
 ## German Video Installation Tutorial
+
 For my German friends, KiwiJuice02 made a german video tutorial right here : [link](https://www.youtube.com/watch?v=Ntablvo6y-I)<br>
+
 
 
 In order to get all of this working you need to generate the DevourClient.dll file by building the source code.
