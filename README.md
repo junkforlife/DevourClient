@@ -107,7 +107,7 @@ In order to get all of this working you need to generate the DevourClient.dll fi
 
 ## Contact
 
-You can add me on discord at patate#1252 or on the [discord server](https://discord.gg/2amMFvqjYd)
+You can add me on discord at _.patate or on the [discord server](https://discord.gg/2amMFvqjYd)
 
 ## Code used
 
