@@ -21,6 +21,8 @@
                     return "Town";
                 case "Slaughterhouse":
                     return "Slaughterhouse";
+                case "Manor":
+                    return "Manor";
                 default:
                     return "Menu";
             }

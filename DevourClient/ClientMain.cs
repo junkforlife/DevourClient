@@ -3,6 +3,7 @@ using MelonLoader;
 using System.Threading.Tasks;
 using Il2CppPhoton.Bolt;
 using UnityEngine;
+using Il2Cpp;
 
 namespace DevourClient
 {
@@ -59,6 +60,7 @@ namespace DevourClient
         static bool need_fly_reset = false;
         static bool crosshair = false;
         static bool in_game_cache = false;
+        static bool should_show_start_message = true;
         static Texture2D crosshairTexture = default!;
 
         public void Start()
@@ -79,6 +81,8 @@ namespace DevourClient
             MelonCoroutines.Start(Helpers.Entities.GetGhosts());
             MelonCoroutines.Start(Helpers.Entities.GetBoars());
             MelonCoroutines.Start(Helpers.Entities.GetCorpses());
+            MelonCoroutines.Start(Helpers.Entities.GetCrows());
+            MelonCoroutines.Start(Helpers.Entities.GetLumps());
             MelonCoroutines.Start(Helpers.Entities.GetAzazels());
             MelonCoroutines.Start(Helpers.Entities.GetAllPlayers());
         }
@@ -222,6 +226,12 @@ namespace DevourClient
 
         public void OnGUI()
         {
+            if (should_show_start_message)
+            {
+                if (DevourClient.Hacks.Misc.ShowMessageBox("Welcome to DevourClient.\n\nPress the INS key to open the menu.") == 0)
+                    should_show_start_message = false;
+            }
+
             GUI.backgroundColor = Color.grey;
 
             GUI.skin.button.normal.background = GUIHelper.MakeTex(2, 2, Color.black);
@@ -332,6 +342,22 @@ namespace DevourClient
                         if (corpse != null)
                         {
                             Render.Render.DrawNameESP(corpse.transform.position, "Corpse", new Color(1.0f, 0.0f, 0.0f, 1.0f));
+                        }
+                    }
+
+                    foreach (Il2Cpp.CrowBehaviour crow in Helpers.Entities.Crows)
+                    {
+                        if (crow != null)
+                        {
+                            Render.Render.DrawNameESP(crow.transform.position, "Crow", new Color(1.0f, 0.0f, 0.0f, 1.0f));
+                        }
+                    }
+
+                    foreach (Il2Cpp.ManorLumpController lump in Helpers.Entities.Lumps)
+                    {
+                        if (lump != null)
+                        {
+                            Render.Render.DrawNameESP(lump.transform.position, "Lump", new Color(1.0f, 0.0f, 0.0f, 1.0f));
                         }
                     }
                 }
@@ -517,6 +543,11 @@ namespace DevourClient
                 BoltNetwork.Instantiate(BoltPrefabs.AzazelNathan, Player.GetPlayer().transform.position, Quaternion.identity);
             }
 
+            if (GUI.Button(new Rect(Settings.Settings.x + 360, Settings.Settings.y + 180, 60, 25), "April") && Player.IsInGameOrLobby() && BoltNetwork.IsServer)
+            {
+                BoltNetwork.Instantiate(BoltPrefabs.AzazelApril, Player.GetPlayer().transform.position, Quaternion.identity);
+            }
+
             // demon
 
             if (GUI.Button(new Rect(Settings.Settings.x + 10, Settings.Settings.y + 220, 60, 25), "Ghost") && Player.IsInGameOrLobby() && BoltNetwork.IsServer)
@@ -542,6 +573,16 @@ namespace DevourClient
             if (GUI.Button(new Rect(Settings.Settings.x + 290, Settings.Settings.y + 220, 60, 25), "Corpse") && BoltNetwork.IsServer && Player.IsInGameOrLobby())
             {
                 BoltNetwork.Instantiate(BoltPrefabs.Corpse, Player.GetPlayer().transform.position, Quaternion.identity);
+            }
+
+            if (GUI.Button(new Rect(Settings.Settings.x + 360, Settings.Settings.y + 220, 60, 25), "Crow") && BoltNetwork.IsServer && Player.IsInGameOrLobby())
+            {
+                BoltNetwork.Instantiate(BoltPrefabs.Crow, Player.GetPlayer().transform.position, Quaternion.identity);
+            }
+
+            if (GUI.Button(new Rect(Settings.Settings.x + 430, Settings.Settings.y + 220, 60, 25), "Lump") && BoltNetwork.IsServer && Player.IsInGameOrLobby())
+            {
+                BoltNetwork.Instantiate(BoltPrefabs.ManorLump, Player.GetPlayer().transform.position, Quaternion.identity);
             }
 
             // Animal
@@ -588,7 +629,7 @@ namespace DevourClient
                 {
                     Hacks.Misc.CarryObject("SurvivalPig");
                 }
-            }
+            }    
         }
 
         private static void MapSpecificTab()
@@ -731,6 +772,94 @@ namespace DevourClient
                         Hacks.Misc.DespawnCorpses();
                     }
                     break;
+
+                case "Manor":
+                    if (GUI.Button(new Rect(Settings.Settings.x + 190, Settings.Settings.y + 70, 150, 30), "TP to Azazel"))
+                    {
+                        try
+                        {
+                            Il2Cpp.NolanBehaviour nb = Player.GetPlayer();
+
+                            nb.TeleportTo(Helpers.Map.GetAzazel().transform.position, Quaternion.identity);
+                        }
+                        catch
+                        {
+                            MelonLogger.Msg("Azazel not found !");
+                        }
+                    }
+
+                    if (GUI.Button(new Rect(Settings.Settings.x + 190, Settings.Settings.y + 110, 150, 30), "Despawn Crows"))
+                    {
+                        Hacks.Misc.DespawnCrows();
+                    }
+
+                    if (GUI.Button(new Rect(Settings.Settings.x + 190, Settings.Settings.y + 150, 150, 30), "Despawn Lumps"))
+                    {
+                        Hacks.Misc.DespawnLumps();
+                    }
+
+                    if (GUI.Button(new Rect(Settings.Settings.x + 370, Settings.Settings.y + 70, 150, 30), "Switch realm"))
+                    {
+                        Il2Cpp.NolanBehaviour nb = Player.GetPlayer();
+                        Vector3 pos = nb.transform.position;
+
+                        ManorDeadRealmTrigger realm = Il2Cpp.ManorDeadRealmTrigger.FindObjectOfType<Il2Cpp.ManorDeadRealmTrigger>();
+                        if (realm == null)
+                        {
+                            MelonLogger.Warning("realm was null.");
+                            return;
+                        }
+
+                        if (realm.IsInDeadRealm)
+                        {
+                            // normal dimension
+                            pos.x += 150f;// -10.216758f;
+                            //pos.y = 0.009999979f;
+                            //pos.z = -7.632657f;
+
+                        }
+                        else
+                        {
+                            // other dimension
+                            pos.x -= 150f;//-160.03688f;
+                            //pos.y = 0.010014875f;
+                            //pos.z = -7.5686994f;
+                        }
+
+                        nb.locomotion.SetPosition(pos, false);
+                    }
+
+                    if (GUI.Button(new Rect(Settings.Settings.x + 370, Settings.Settings.y + 110, 150, 30), "Switch realm (house)"))
+                    {
+                        Il2Cpp.NolanBehaviour nb = Player.GetPlayer();
+                        Vector3 pos = nb.transform.position;
+
+                        ManorDeadRealmTrigger realm = Il2Cpp.ManorDeadRealmTrigger.FindObjectOfType<Il2Cpp.ManorDeadRealmTrigger>();
+                        if (realm == null)
+                        {
+                            MelonLogger.Warning("realm was null.");
+                            return;
+                        }
+
+                        if (realm.IsInDeadRealm)
+                        {
+                            // normal dimension
+                            pos.x = -10.216758f;
+                            pos.y = 0.009999979f;
+                            pos.z = -7.632657f;
+
+                        }
+                        else
+                        {
+                            // other dimension
+                            pos.x = -160.03688f;
+                            pos.y = 0.010014875f;
+                            pos.z = -7.5686994f;
+                        }
+
+                        nb.locomotion.SetPosition(pos, false);
+                    }
+                    break;
             }
 
             // load map
@@ -760,6 +889,12 @@ namespace DevourClient
             {
                 Helpers.Map.LoadMap("Slaughterhouse");
             }
+
+            if (GUI.Button(new Rect(Settings.Settings.x + 560, Settings.Settings.y + 240, 100, 30), "Manor") && BoltNetwork.IsServer)
+            {
+                Helpers.Map.LoadMap("Manor");
+            }
+
         }
 
         private static void EspTab()
@@ -916,13 +1051,36 @@ namespace DevourClient
                 }
             }
 
+            if (GUILayout.Button("Shovel"))
+            {
+                if (BoltNetwork.IsServer && !Player.IsInGame())
+                {
+                    BoltNetwork.Instantiate(BoltPrefabs.SurvivalSpade, Player.GetPlayer().transform.position, Quaternion.identity);
+                }
+                else
+                {
+                    Hacks.Misc.CarryObject("SurvivalSpade");
+                }
+            }
+
+            if (GUILayout.Button("Cake"))
+            {
+                if (BoltNetwork.IsServer && !Player.IsInGame())
+                {
+                    BoltNetwork.Instantiate(BoltPrefabs.SurvivalCake, Player.GetPlayer().transform.position, Quaternion.identity);
+                }
+                else
+                {
+                    Hacks.Misc.CarryObject("SurvivalCake");
+                }
+            }
 
             GUILayout.EndScrollView();
             GUILayout.EndVertical();
 
             GUILayout.BeginVertical();
 
-            GUILayout.Label("Rituel Objects");
+            GUILayout.Label("Ritual Objects");
 
             Settings.Settings.rituelObjectsScrollPosition = GUILayout.BeginScrollView(Settings.Settings.rituelObjectsScrollPosition, GUILayout.Width(220), GUILayout.Height(190));
 
@@ -985,6 +1143,30 @@ namespace DevourClient
                 else
                 {
                     Hacks.Misc.CarryObject("RitualBook-Active-1");
+                }
+            }
+     
+            if (GUILayout.Button("Dirty head"))
+            {
+                if (BoltNetwork.IsServer && !Player.IsInGame())
+                {
+                    BoltNetwork.Instantiate(BoltPrefabs.SurvivalHead, Player.GetPlayer().transform.position, Quaternion.identity);
+                }
+                else
+                {
+                    Hacks.Misc.CarryObject("SurvivalHead");
+                }
+            }
+
+            if (GUILayout.Button("Clean head"))
+            {
+                if (BoltNetwork.IsServer && !Player.IsInGame())
+                {
+                    BoltNetwork.Instantiate(BoltPrefabs.SurvivalCleanHead, Player.GetPlayer().transform.position, Quaternion.identity);
+                }
+                else
+                {
+                    Hacks.Misc.CarryObject("SurvivalCleanHead");
                 }
             }
 
@@ -1183,6 +1365,22 @@ namespace DevourClient
                 }
             }
 
+            if (GUILayout.Button("SurvivalApril"))
+            {
+                if (BoltNetwork.IsServer)
+                {
+                    BoltNetwork.Instantiate(BoltPrefabs.SurvivalApril, Player.GetPlayer().transform.position, Quaternion.identity);
+                }
+            }
+
+            if (GUILayout.Button("SurvivalFrank"))
+            {
+                if (BoltNetwork.IsServer)
+                {
+                    BoltNetwork.Instantiate(BoltPrefabs.SurvivalFrank, Player.GetPlayer().transform.position, Quaternion.identity);
+                }
+            }
+
             if (GUILayout.Button("SurvivalRose"))
             {
                 if (BoltNetwork.IsServer)
@@ -1244,6 +1442,14 @@ namespace DevourClient
                 if (BoltNetwork.IsServer)
                 {
                     BoltNetwork.Instantiate(BoltPrefabs.TV, Player.GetPlayer().transform.position, Quaternion.identity);
+                }
+            }
+
+            if (GUILayout.Button("Miror"))
+            {
+                if (BoltNetwork.IsServer)
+                {
+                    BoltNetwork.Instantiate(BoltPrefabs.ManorMirror, Player.GetPlayer().transform.position, Quaternion.identity);
                 }
             }
 

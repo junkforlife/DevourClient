@@ -99,7 +99,24 @@ namespace DevourClient.Hacks
                     }
 					break;
 
-				default:
+				case "Manor":
+                    Il2Cpp.MapController mapc = UnityEngine.Object.FindObjectOfType<Il2Cpp.MapController>();
+                    if (!mapc)
+                    {
+                        return;
+                    }
+
+                    if (burnAll)
+                    {
+                        mapc.SetProgressTo(10);
+                    }
+                    else
+                    {
+                        mapc.SetProgressTo(mapc.GetMapProgress() + 1);
+                    }
+                    break;
+
+                default:
 					Il2Cpp.SurvivalObjectBurnController _altar = UnityEngine.Object.FindObjectOfType<Il2Cpp.SurvivalObjectBurnController>();
                     if (!_altar) {
                         return;
@@ -432,11 +449,36 @@ namespace DevourClient.Hacks
 			}
 		}
 
-		public static void ShowMessageBox(string message)
+        public static void DespawnCrows()
+        {
+            foreach (Il2Cpp.CrowBehaviour crow in Helpers.Entities.Crows)
+            {
+                if (crow != null)
+                {
+                    crow.Despawn();
+                }
+            }
+        }
+
+        public static void DespawnLumps()
+        {
+            foreach (Il2Cpp.ManorLumpController lump in Helpers.Entities.Lumps)
+            {
+                if (lump != null)
+                {
+					lump.Dissolve();
+                }
+            }
+        }
+
+        public static int ShowMessageBox(string message)
         {
 			//not used, might be useful, some day
 			Il2CppHorror.Menu menu = UnityEngine.Object.FindObjectOfType<Il2CppHorror.Menu>();
+			if (menu == null)
+				return 1;
 			menu.ShowMessageModal(message);
+			return 0;
 		}
 		
 		public static void PlaySound()

@@ -187,6 +187,8 @@ namespace DevourClient.Helpers
         public static Il2Cpp.SurvivalAzazelBehaviour[] Azazels = default!;
         public static Il2Cpp.BoarBehaviour[] Boars = default!;
         public static Il2Cpp.CorpseBehaviour[] Corpses = default!;
+        public static Il2Cpp.CrowBehaviour[] Crows = default!;
+        public static Il2Cpp.ManorLumpController[] Lumps = default!;
 
         public static IEnumerator GetLocalPlayer()
         {
@@ -327,6 +329,28 @@ namespace DevourClient.Helpers
             while (true)
             {
                 Corpses = Il2Cpp.CorpseBehaviour.FindObjectsOfType<Il2Cpp.CorpseBehaviour>();
+
+                // Wait 5 seconds before caching objects again.
+                yield return new WaitForSeconds(5f);
+            }
+        }
+
+        public static IEnumerator GetCrows()
+        {
+            while (true)
+            {
+                Crows = Il2Cpp.CrowBehaviour.FindObjectsOfType<Il2Cpp.CrowBehaviour>();
+
+                // Wait 5 seconds before caching objects again.
+                yield return new WaitForSeconds(5f);
+            }
+        }
+
+        public static IEnumerator GetLumps()
+        {
+            while (true)
+            {
+                Lumps = Il2Cpp.ManorLumpController.FindObjectsOfType<Il2Cpp.ManorLumpController>();
 
                 // Wait 5 seconds before caching objects again.
                 yield return new WaitForSeconds(5f);

@@ -11,17 +11,26 @@ import json
 f = open('script.json')
 data = json.load(f)
 
-o = open('out.cs', 'a')
+o = open('out.cs', 'w')
 o.write("string[] achievements = {")
-tot = 0
+tot_ach = 0
 for i in data['ScriptString']:
     v = i["Value"]
     if "ACH_" in v :
         o.write('"'+v+'", ')
-        tot+=1
+        tot_ach+=1
+o.write("};\n")
 
-o.write("};")
-print(f"{tot} achievements")
+tot_stat = 0
+o.write("string[] stats = {")
+for j in data['ScriptString']:
+    v = j["Value"]
+    if "STAT_" in v :
+        o.write('"'+v+'", ')
+        tot_stat+=1
+o.write("};\n")
+
+print(f"{tot_ach} achievements, {tot_stat} stats")
 
 # Closing files
 o.close()
