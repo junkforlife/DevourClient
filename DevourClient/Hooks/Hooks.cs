@@ -124,7 +124,7 @@ namespace DevourClient.Hooks
         {
             static void Postfix(ref bool __result)
             {
-                if (ClientMain.infinite_mirors)
+                if (ClientMain.infinite_mirrors)
                     __result = false;
             }
         }

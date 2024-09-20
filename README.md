@@ -48,7 +48,7 @@ Everything about spoofing ehre (steam name, server name, level...) will persist 
 * Change the player's speed
 * Fullbright
 * Create a lobby with no player limit
-* Infinite mirors (Manor update)
+* Infinite mirrors (Manor update)
 * Switch between realms (Manor update)
 
 ## English Installation Tutorial

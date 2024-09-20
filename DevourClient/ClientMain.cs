@@ -46,7 +46,7 @@ namespace DevourClient
         public static bool exp_modifier = false;
         public static float exp = 1000f;
         public static bool _walkInLobby = false;
-        public static bool infinite_mirors = false;
+        public static bool infinite_mirrors = false;
         static bool player_esp = false;
         static bool player_skel_esp = false;
         static bool player_snapline = false;
@@ -861,7 +861,7 @@ namespace DevourClient
                         nb.locomotion.SetPosition(pos, false);
                     }
 
-                    infinite_mirors = GUI.Toggle(new Rect(Settings.Settings.x + 370, Settings.Settings.y + 150, 150, 20), infinite_mirors, "Infinite mirors");
+                    infinite_mirrors = GUI.Toggle(new Rect(Settings.Settings.x + 370, Settings.Settings.y + 150, 150, 20), infinite_mirrors, "Infinite mirrors");
                     break;
             }
 
@@ -1448,7 +1448,7 @@ namespace DevourClient
                 }
             }
 
-            if (GUILayout.Button("Miror"))
+            if (GUILayout.Button("Mirror"))
             {
                 if (BoltNetwork.IsServer)
                 {
