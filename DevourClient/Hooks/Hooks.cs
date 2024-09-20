@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using Il2Cpp;
 
 namespace DevourClient.Hooks
 {
@@ -114,6 +115,17 @@ namespace DevourClient.Hooks
                 flashlight.requiresPurchase = false;
                 flashlight.isOwned = true;
                 return;
+            }
+        }
+
+        [HarmonyPatch(typeof(ManorMirrorController))]
+        [HarmonyPatch(nameof(ManorMirrorController.IsBroken))] //annotation boiler plate to tell Harmony what to patch. Refer to docs.
+        static class ManorMirrorController_IsBroken
+        {
+            static void Postfix(ref bool __result)
+            {
+                if (ClientMain.infinite_mirors)
+                    __result = false;
             }
         }
     }
