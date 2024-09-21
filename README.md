@@ -63,7 +63,8 @@ For my French fellas out there, 1tap2times made a French video tutorial for the 
 
 For my German friends, KiwiJuice02 made a german video tutorial right here : [link](https://www.youtube.com/watch?v=Ntablvo6y-I)<br>
 
-In order to get all of this working you need to generate the DevourClient.dll file by building the source code.
+In order to get all of this working you need to generate the DevourClient.dll file by building the source code.<br>
+
 0. Install [.NET 6 SDK and runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0).
 1. [Build the cheat from source](https://github.com/ALittlePatate/DevourClient#building-from-source).
 2. Put the DevourClient.dll file located in `DevourClient\bin\Release\net6.0` inside `C:\Program Files (x86)\Steam\steamapps\common\Devour\Mods` folder.
@@ -76,12 +77,13 @@ In order to get all of this working you need to generate the DevourClient.dll fi
 ## Building from source
 
 0. Clone the repository (or Code -> Download Zip)
-1. Install [MelonLoader](https://github.com/LavaGang/MelonLoader/releases) V0.6.4 (go to Settings -> tick "Show ALPHA Pre-Releases") to Devour.
-2. Start your game. A cmd should appear, don't close it, MelonLoader is installing and decompiling Devour's game assemblies.
-3. Wait for the process to finish, once it's done close the game.
-4. Open the solution file (DevourClient.sln) in Visual Studio
-5. Go to : Project --> Add a reference --> Browse --> Click on the browse button in the down right corner of the window.
-6. Add those files :
+1. Install [.NET 6 SDK and runtime](https://dotnet.microsoft.com/en-us/download/dotnet/6.0).
+2. Install [MelonLoader](https://github.com/LavaGang/MelonLoader/releases) V0.6.4 (go to Settings -> tick "Show ALPHA Pre-Releases") to Devour.
+3. Start your game. A cmd should appear, don't close it, MelonLoader is installing and decompiling Devour's game assemblies.
+4. Wait for the process to finish, once it's done close the game.
+5. Open the solution file (DevourClient.sln) in Visual Studio
+6. Go to : Project --> Add a reference --> Browse --> Click on the browse button in the down right corner of the window.
+7. Add those files :
 * `C:\Program Files (x86)\Steam\steamapps\common\Devour\MelonLoader\net6\MelonLoader.dll`
 * `C:\Program Files (x86)\Steam\steamapps\common\Devour\MelonLoader\net6\0Harmony.dll`
 * `C:\Program Files (x86)\Steam\steamapps\common\Devour\MelonLoader\net6\Il2CppInterop.Runtime.dll`
@@ -105,7 +107,7 @@ In order to get all of this working you need to generate the DevourClient.dll fi
 * `C:\Program Files (x86)\Steam\steamapps\common\Devour\MelonLoader\Il2CppAssemblies\UnityEngine.AnimationModule.dll`
 * `C:\Program Files (x86)\Steam\steamapps\common\Devour\MelonLoader\Il2CppAssemblies\UnityEngine.PhysicsModule.dll`
 * `C:\Program Files (x86)\Steam\steamapps\common\Devour\MelonLoader\Il2CppAssemblies\Il2Cppcom.rlabrecque.steamworks.net.dll`
-7. Build the solutions in Release | Any CPU
+8. Build the solutions in Release | Any CPU
 
 ## Contact
 
